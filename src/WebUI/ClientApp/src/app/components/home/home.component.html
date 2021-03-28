@@ -1,10 +1,29 @@
-<app-nav-menu></app-nav-menu>
+<app-nav-menu [firstPlayerScore]="firstPlayerScore"
+              [secondPlayerScore]="secondPlayerScore"></app-nav-menu>
+<div class="row" id="winningRow">
+  <div class="col-5">
+    <span *ngIf="crewMemberFightResult?.firstPlayerCrewMember.isWinner || starshipFightResult?.firstPlayeStarship.isWinner"
+          class="d-flex justify-content-center text-success">First player wins!</span>
+  </div>
+  <div class="col-2">
+    <span *ngIf="crewMemberFightResult?.isDraw || starshipFightResult?.isDraw"
+          class="d-flex justify-content-center text-info">It's a draw!</span>
+  </div>
+  <div class="col-5">
+    <span *ngIf="crewMemberFightResult?.secondPlayerCrewMember.isWinner || starshipFightResult?.secondPlayeStarship.isWinner"
+          class="d-flex justify-content-center text-success">Second player wins!</span>
+  </div>
+</div>
 <div class="row">
   <div id="leftColumn" class="col-5">
     <app-crew-member-card 
     *ngIf="fightType === 'CrewMember' && crewMemberFightResult?.firstPlayerCrewMember"
     [isLoading]="isLoading"
     [crewMember]="crewMemberFightResult.firstPlayerCrewMember"></app-crew-member-card>
+    <app-starship-member-card 
+    *ngIf="fightType === 'Starship' && starshipFightResult?.firstPlayeStarship"
+    [isLoading]="isLoading"
+    [starship]="starshipFightResult.firstPlayeStarship"></app-starship-member-card>
   </div>
   <div class="col-2 align-self-center">
     <div class="row mb-3 justify-content-center">
@@ -15,9 +34,13 @@
     </div>
   </div>
   <div id="rightColumn" class="col-5">
-    <app-crew-member-card class="col-5" 
+    <app-crew-member-card
     *ngIf="fightType === 'CrewMember' && crewMemberFightResult?.secondPlayerCrewMember"
     [isLoading]="isLoading"
     [crewMember]="crewMemberFightResult.secondPlayerCrewMember"></app-crew-member-card>
+    <app-starship-member-card 
+    *ngIf="fightType === 'Starship' && starshipFightResult?.secondPlayeStarship"
+    [isLoading]="isLoading"
+    [starship]="starshipFightResult.secondPlayeStarship"></app-starship-member-card>
   </div>
 </div>

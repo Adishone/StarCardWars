@@ -42,15 +42,15 @@ namespace StarCardWars.Application.CrewMembers.Queries
             fightResult.FirstPlayeStarship = _mapper.Map<StarshipDto>(starships.First()); 
             fightResult.SecondPlayeStarship = _mapper.Map<StarshipDto>(starships.Last());
             Score score;
-            var firstCrewMemberProperty = request.FightProperty == "Mass" ? fightResult.FirstPlayeStarship.Mass : fightResult.FirstPlayeStarship.CrewMembers.Count();
-            var secondCrewMemberProperty = request.FightProperty == "Mass" ? fightResult.SecondPlayeStarship.Mass : fightResult.SecondPlayeStarship.CrewMembers.Count();
+            var firstStarshipProperty = request.FightProperty == "Mass" ? fightResult.FirstPlayeStarship.Mass : fightResult.FirstPlayeStarship.NumberOfCrewMembers;
+            var secondStarshipProperty = request.FightProperty == "Mass" ? fightResult.SecondPlayeStarship.Mass : fightResult.SecondPlayeStarship.NumberOfCrewMembers;
 
-            if (firstCrewMemberProperty == secondCrewMemberProperty)
+            if (firstStarshipProperty == secondStarshipProperty)
             {
                 fightResult.IsDraw = true;
                 score = await _mediator.Send(new GetScoreQuery());
             }
-            else if (firstCrewMemberProperty > secondCrewMemberProperty)
+            else if (firstStarshipProperty > secondStarshipProperty)
             {
                 fightResult.FirstPlayeStarship.IsWinner = true;
                 score = await _mediator.Send(new UpdateScoreCommand(PlayerEnum.FirstPlayer));                

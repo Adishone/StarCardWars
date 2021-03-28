@@ -1,5 +1,5 @@
 {
-  "x-generator": "NSwag v13.9.4.0 (NJsonSchema v10.3.1.0 (Newtonsoft.Json v12.0.0.0))",
+  "x-generator": "NSwag v13.9.4.0 (NJsonSchema v10.3.1.0 (Newtonsoft.Json v10.0.0.0))",
   "openapi": "3.0.0",
   "info": {
     "title": "Star Card Wars API",
@@ -30,6 +30,26 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/CrewMembersFightResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Score": {
+      "get": {
+        "tags": [
+          "Score"
+        ],
+        "operationId": "Score_GetScore",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Score"
                 }
               }
             }
@@ -232,6 +252,24 @@
           }
         }
       },
+      "Score": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "firstPlayerWins": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "secondPlayerWins": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
       "StarshipsFightResult": {
         "type": "object",
         "additionalProperties": false,
@@ -289,15 +327,12 @@
             "type": "string",
             "nullable": true
           },
-          "crewMembers": {
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "$ref": "#/components/schemas/CrewMember"
-            }
-          },
           "isWinner": {
             "type": "boolean"
+          },
+          "numberOfCrewMembers": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       }

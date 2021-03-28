@@ -1,1 +1,15 @@
-<p>starship-member-card works!</p>
+<div class="d-flex justify-content-center" *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+  </div>
+  
+  <mat-card class="example-card" *ngIf="!isLoading">
+      <mat-card-header class="justify-content-center">
+        <mat-card-title>{{starship.name}}</mat-card-title>
+      </mat-card-header>
+      <img mat-card-image [src]="starship.imagePath" alt="Photo of starship">
+      <mat-card-content>
+        <div>Mass: {{starship.mass}}</div>
+        <div>Number of crew members: {{starship.numberOfCrewMembers}}</div>
+      </mat-card-content>
+    </mat-card>
+    

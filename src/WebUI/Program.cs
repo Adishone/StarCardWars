@@ -28,6 +28,7 @@ namespace StarCardWars.WebUI
                         context.Database.Migrate();
                     }
 
+                    await ApplicationDbContextSeed.SeedScoresAsync(context);
                     await ApplicationDbContextSeed.SeedStarshipsAsync(context);
                     await ApplicationDbContextSeed.SeedCrewMembersAsync(context);
                 }

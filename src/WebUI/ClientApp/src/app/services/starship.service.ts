@@ -11,7 +11,7 @@ export class StarshipService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public getStarshipFightResult(): Observable<Result<StarshipFightResult>> {
-    return this.httpClient.get<Result<StarshipFightResult>>('localhost:44312/api/StarshipFight');
+  public getStarshipFightResult(): Observable<StarshipFightResult> {
+    return this.httpClient.get<StarshipFightResult>('https://localhost:44312/api/StarshipFight?fightProperty=Mass');
   }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-nav-menu',
@@ -6,6 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./nav-menu.component.scss']
 })
 export class NavMenuComponent {
+  @Input() firstPlayerScore: number;
+  @Input() secondPlayerScore: number;
   isExpanded = false;
 
   collapse() {

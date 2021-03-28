@@ -7,6 +7,21 @@ namespace StarCardWars.Infrastructure.Persistence
 {
     public static class ApplicationDbContextSeed
     {
+        public static async Task SeedScoresAsync(ApplicationDbContext context)
+        {
+            if (!context.Scores.Any())
+            {
+                context.Scores.Add(new Score
+                {
+                    Id = 1,
+                    FirstPlayerWins = 0,
+                    SecondPlayerWins = 0
+                });
+
+                await context.SaveChangesAsync();
+            }
+        }
+
         public static async Task SeedStarshipsAsync(ApplicationDbContext context)
         {
             if (!context.Starships.Any())

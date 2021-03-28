@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
 using StarCardWars.Application.Common.Mappings;
-using StarCardWars.Application.TodoLists.Queries.GetTodos;
 using StarCardWars.Domain.Entities;
 using NUnit.Framework;
 using System;
 using System.Runtime.Serialization;
+using StarCardWars.Application.CrewMembers.Models;
+using StarCardWars.Application.Starships.Models;
 
 namespace StarCardWars.Application.UnitTests.Common.Mappings
 {
@@ -30,8 +31,8 @@ namespace StarCardWars.Application.UnitTests.Common.Mappings
         }
         
         [Test]
-        [TestCase(typeof(TodoList), typeof(TodoListDto))]
-        [TestCase(typeof(TodoItem), typeof(TodoItemDto))]
+        [TestCase(typeof(CrewMember), typeof(CrewMemberDto))]
+        [TestCase(typeof(Starship), typeof(StarshipDto))]
         public void ShouldSupportMappingFromSourceToDestination(Type source, Type destination)
         {
             var instance = GetInstanceOf(source);

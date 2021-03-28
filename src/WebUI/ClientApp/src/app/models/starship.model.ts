@@ -5,5 +5,5 @@ export interface Starship {
     name: string;
     mass: number;
     imagePath: string;
-    crewMembers: CrewMember[];
+    numberOfCrewMembers: number;
 }

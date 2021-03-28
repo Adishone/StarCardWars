@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Starship } from 'src/app/models/starship.model';
 
 @Component({
   selector: 'app-starship-member-card',
@@ -6,7 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./starship-member-card.component.css']
 })
 export class StarshipMemberCardComponent implements OnInit {
-
+  @Input() starship: Starship;
+  @Input() isLoading = false;
   constructor() { }
 
   ngOnInit(): void {

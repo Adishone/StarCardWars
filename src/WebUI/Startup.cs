@@ -100,6 +100,7 @@ namespace StarCardWars.WebUI
                 app.UseHsts();
             }
 
+            app.UseCors("CorsPolicy");
             app.UseHealthChecks("/health");
             app.UseHttpsRedirection();
             app.UseStaticFiles();

@@ -82,6 +82,72 @@ export class CrewMemberFightClient implements ICrewMemberFightClient {
     }
 }
 
+export interface IScoreClient {
+    getScore(): Observable<Score>;
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class ScoreClient implements IScoreClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    getScore(): Observable<Score> {
+        let url_ = this.baseUrl + "/api/Score";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetScore(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetScore(<any>response_);
+                } catch (e) {
+                    return <Observable<Score>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<Score>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetScore(response: HttpResponseBase): Observable<Score> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = Score.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<Score>(<any>null);
+    }
+}
+
 export interface IStarshipFightClient {
     getStarshipFightResult(fightProperty: string | null | undefined): Observable<StarshipsFightResult>;
 }
@@ -406,6 +472,50 @@ export interface ICrewMember {
     starship?: Starship | undefined;
 }
 
+export class Score implements IScore {
+    id?: number;
+    firstPlayerWins?: number;
+    secondPlayerWins?: number;
+
+    constructor(data?: IScore) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.firstPlayerWins = _data["firstPlayerWins"];
+            this.secondPlayerWins = _data["secondPlayerWins"];
+        }
+    }
+
+    static fromJS(data: any): Score {
+        data = typeof data === 'object' ? data : {};
+        let result = new Score();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["firstPlayerWins"] = this.firstPlayerWins;
+        data["secondPlayerWins"] = this.secondPlayerWins;
+        return data; 
+    }
+}
+
+export interface IScore {
+    id?: number;
+    firstPlayerWins?: number;
+    secondPlayerWins?: number;
+}
+
 export class StarshipsFightResult implements IStarshipsFightResult {
     firstPlayeStarship?: StarshipDto | undefined;
     secondPlayeStarship?: StarshipDto | undefined;
@@ -467,8 +577,8 @@ export class StarshipDto implements IStarshipDto {
     name?: string | undefined;
     mass?: number;
     imagePath?: string | undefined;
-    crewMembers?: CrewMember[] | undefined;
     isWinner?: boolean;
+    numberOfCrewMembers?: number;
 
     constructor(data?: IStarshipDto) {
         if (data) {
@@ -485,12 +595,8 @@ export class StarshipDto implements IStarshipDto {
             this.name = _data["name"];
             this.mass = _data["mass"];
             this.imagePath = _data["imagePath"];
-            if (Array.isArray(_data["crewMembers"])) {
-                this.crewMembers = [] as any;
-                for (let item of _data["crewMembers"])
-                    this.crewMembers!.push(CrewMember.fromJS(item));
-            }
             this.isWinner = _data["isWinner"];
+            this.numberOfCrewMembers = _data["numberOfCrewMembers"];
         }
     }
 
@@ -507,12 +613,8 @@ export class StarshipDto implements IStarshipDto {
         data["name"] = this.name;
         data["mass"] = this.mass;
         data["imagePath"] = this.imagePath;
-        if (Array.isArray(this.crewMembers)) {
-            data["crewMembers"] = [];
-            for (let item of this.crewMembers)
-                data["crewMembers"].push(item.toJSON());
-        }
         data["isWinner"] = this.isWinner;
+        data["numberOfCrewMembers"] = this.numberOfCrewMembers;
         return data; 
     }
 }
@@ -522,8 +624,8 @@ export interface IStarshipDto {
     name?: string | undefined;
     mass?: number;
     imagePath?: string | undefined;
-    crewMembers?: CrewMember[] | undefined;
     isWinner?: boolean;
+    numberOfCrewMembers?: number;
 }
 
 export class SwaggerException extends Error {

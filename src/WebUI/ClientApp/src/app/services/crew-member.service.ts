@@ -11,7 +11,7 @@ export class CrewMemberService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public getCrewMembersFightResult(): Observable<Result<CrewMemberFightResult>> {
-    return this.httpClient.get<Result<CrewMemberFightResult>>('https://localhost:44312/api/CrewMemberFight?fightProperty=strength');
+  public getCrewMembersFightResult(): Observable<CrewMemberFightResult> {
+    return this.httpClient.get<CrewMemberFightResult>('https://localhost:44312/api/CrewMemberFight?fightProperty=Strength');
   }
 }
