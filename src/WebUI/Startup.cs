@@ -54,6 +54,16 @@ namespace StarCardWars.WebUI
                 options.SuppressModelStateInvalidFilter = true;
             });
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: "CorsPolicy", builder =>
+                {
+                    builder.WithOrigins("http://localhost:4200", "http://localhost:4200")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+                });
+            });
+
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {

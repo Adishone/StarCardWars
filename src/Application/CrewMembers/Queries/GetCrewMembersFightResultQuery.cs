@@ -17,6 +17,10 @@ namespace StarCardWars.Application.CrewMembers.Queries
     public class GetCrewMembersFightResultQuery : IRequest<CrewMembersFightResult>
     {
         public string FightProperty { get; set; }
+        public GetCrewMembersFightResultQuery(string fightProperty)
+        {
+            FightProperty = fightProperty;
+        }
     }
 
     public class GetCrewMembersFightResultQueryHandler : IRequestHandler<GetCrewMembersFightResultQuery, CrewMembersFightResult>

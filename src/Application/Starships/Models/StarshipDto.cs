@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
+using StarCardWars.Application.Common.Mappings;
 using StarCardWars.Domain.Entities;
 using System.Collections.Generic;
 
 namespace StarCardWars.Application.Starships.Models
 {
-    public class StarshipDto
+    public class StarshipDto : IMapFrom<Starship>
     {
         public int Id { get; set; }
         public string Name { get; set; }

@@ -14,7 +14,7 @@
         "operationId": "CrewMemberFight_GetCrewMembersFightResult",
         "parameters": [
           {
-            "name": "FightProperty",
+            "name": "fightProperty",
             "in": "query",
             "schema": {
               "type": "string",

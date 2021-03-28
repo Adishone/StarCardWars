@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { CrewMember } from 'src/app/models/crew-member.model';
 
 @Component({
   selector: 'app-crew-member-card',
@@ -6,7 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./crew-member-card.component.css']
 })
 export class CrewMemberCardComponent implements OnInit {
-  public isLoading = true;
+  @Input() crewMember: CrewMember;
+  @Input() isLoading = false;
   constructor() { }
 
   ngOnInit(): void {

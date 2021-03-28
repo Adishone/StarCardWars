@@ -9,9 +9,9 @@ namespace StarCardWars.WebUI.Controllers
     public class CrewMemberFightController : ApiControllerBase
     {
         [HttpGet]
-        public async Task<ActionResult<CrewMembersFightResult>> GetCrewMembersFightResult([FromQuery] GetCrewMembersFightResultQuery query)
+        public async Task<ActionResult<CrewMembersFightResult>> GetCrewMembersFightResult([FromQuery] string fightProperty)
         {
-            return await Mediator.Send(query);
+            return await Mediator.Send(new GetCrewMembersFightResultQuery(fightProperty));
         }
     }
 }
