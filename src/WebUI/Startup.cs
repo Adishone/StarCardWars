@@ -62,7 +62,7 @@ namespace StarCardWars.WebUI
 
             services.AddOpenApiDocument(configure =>
             {
-                configure.Title = "StarCardWars API";
+                configure.Title = "Star Card Wars API";
                 configure.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
                 {
                     Type = OpenApiSecuritySchemeType.ApiKey,
@@ -101,14 +101,10 @@ namespace StarCardWars.WebUI
             app.UseSwaggerUi3(settings =>
             {
                 settings.Path = "/api";
-                settings.DocumentPath = "/api/specification.json";
             });
 
             app.UseRouting();
 
-            app.UseAuthentication();
-            app.UseIdentityServer();
-            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

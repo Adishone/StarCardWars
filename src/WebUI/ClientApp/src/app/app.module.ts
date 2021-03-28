@@ -8,7 +8,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { HomeComponent } from './components/home/home.component';
-import { FetchDataComponent } from './components/fetch-data/fetch-data.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { MatButtonModule } from '@angular/material/button';
@@ -21,7 +20,6 @@ import { MatCardModule } from '@angular/material/card';
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    FetchDataComponent,
     CrewMemberCardComponent,
     StarshipMemberCardComponent,
   ],
@@ -32,7 +30,6 @@ import { MatCardModule } from '@angular/material/card';
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'fetch-data', component: FetchDataComponent },
     ]),
     BrowserAnimationsModule,
     ModalModule.forRoot(),
