@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./crew-member-card.component.css']
 })
 export class CrewMemberCardComponent implements OnInit {
-
+  public isLoading = true;
   constructor() { }
 
   ngOnInit(): void {

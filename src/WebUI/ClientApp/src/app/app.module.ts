@@ -14,6 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { CrewMemberCardComponent } from './components/crew-member-card/crew-member-card.component';
 import { StarshipMemberCardComponent } from './components/starship-member-card/starship-member-card.component';
 import { MatCardModule } from '@angular/material/card'; 
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; 
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { MatCardModule } from '@angular/material/card';
     BrowserAnimationsModule,
     ModalModule.forRoot(),
     MatButtonModule,
-    MatCardModule
+    MatCardModule,
+    MatProgressSpinnerModule
   ],
   providers: [
   ],
